@@ -1,0 +1,4 @@
+sv1;Tran Quoc Vu;1996/12/24;true;Thua Thien Hue;9.6;Tin
+sv2;Nguyen GDraSon Tung;1992/5/25;false;Ba Ria Vung Tau; 4.6;Toan
+nv1;Van Tung Son;1993/11/25;true;Quang Nam;2.7;Van
+nv2;Nguyen Van Nui;1994/06/12;false;Quang Binh;2.0;Van

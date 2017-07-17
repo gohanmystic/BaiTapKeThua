@@ -1,0 +1,54 @@
+package BaiTapKeThua;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+public class NhanVienDAO {
+	public void InsertNhanVien(Connection conn,String manv, String hoten, String ngaysinh, boolean gioitinh, String quequan, Float hsl, String makhoa) {
+		try {
+			
+			String query = "insert into NhanVien values(?,?,?,?,?,?,?)";
+			PreparedStatement ps = conn.prepareStatement(query);
+			
+			ps.setString(1, manv);
+			ps.setString(2, hoten);
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+			Date dateUtil = sdf.parse(ngaysinh);
+			java.sql.Date dateSql = new java.sql.Date(dateUtil.getTime());
+			ps.setDate(3, dateSql);
+			ps.setBoolean(4, gioitinh);
+			ps.setString(5, quequan);
+			ps.setFloat(6, hsl);
+			ps.setString(7, makhoa);
+			
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public ArrayList<NhanVien> getNhanVienFromDatabase() {
+		try{
+			ArrayList<NhanVien> ds = new ArrayList<>();
+			ConnectDatabase conn = new ConnectDatabase();
+			
+			ResultSet rs = conn.GetDataByTableName("NhanVien");
+			
+			while(rs.next()) {
+				if(rs.getString(1).contains("nv")) {
+					NhanVien nv = new NhanVien(rs.getString(1), rs.getString(2), rs.getDate(3).toString(), rs.getBoolean(4), rs.getString(5), rs.getFloat(6), rs.getString(7));
+					ds.add(nv);
+				}
+			}
+			rs.close();
+			conn.getConn().close();
+			
+			return ds;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+}
